@@ -2,190 +2,24 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Auroral forms: AR poster</title>
-
-<!-- Both libraries are loaded from a CDN, so the page needs internet access. -->
-<script src="https://cdn.jsdelivr.net/npm/aframe@1.5.0/dist/aframe.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
-
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Auroral form videos</title>
 <style>
-  html, body { margin: 0; height: 100%; background: #000; font-family: system-ui, sans-serif; }
-  #start {
-    position: fixed; inset: 0; z-index: 10; display: flex; flex-direction: column;
-    align-items: center; justify-content: center; gap: 16px; padding: 24px;
-    background: #0b1020; color: #fff; text-align: center;
-  }
-  #start h1 { font-size: 1.4rem; margin: 0; }
-  #start p { max-width: 28em; margin: 0; opacity: .8; line-height: 1.4; }
-  #start button {
-    font-size: 1.1rem; padding: 14px 28px; border: 0; border-radius: 10px;
-    background: #4ade80; color: #062; font-weight: 600;
-  }
-  #fallback { margin-top: 8px; font-size: .9rem; }
-  #fallback a { color: #8cc8ff; }
+  body { font-family: sans-serif; max-width: 700px; margin: 0 auto; padding: 1rem; }
+  video { width: 100%; border-radius: 6px; }
+  h2 { margin-bottom: 0.2rem; }
+  p { margin-top: 0; color: #555; }
 </style>
 </head>
 <body>
+<h1>Auroral form identification: example events</h1>
 
-<div id="start">
-  <h1>Auroral forms in motion</h1>
-  <p>Tap start, allow camera access, then point your phone at the poster so the stills come alive.</p>
-  <button id="startBtn">Start</button>
-  <div id="fallback">Prefer plain videos? <a id="fallbackLink" href="#">Open the video page</a></div>
-</div>
+<h2>Omega band</h2>
+<p>Dawn sector, 2001, 12 min of data.</p>
+<video src="videos/omega_band.mp4" controls playsinline preload="metadata"></video>
 
-<script>
-/* ======================= SETTINGS: edit these ======================= */
-
-// Compiled target file (made from your poster image, see notes at the bottom)
-const TARGET_FILE = "./poster.mind";
-
-// How many targets can be tracked at once (1 is fine for a single poster image)
-const MAX_TRACK = 1;
-
-// Optional link to a plain video page / playlist, for people whose phone struggles with AR.
-// Leave as "" to hide the fallback link.
-const FALLBACK_URL = "";
-
-// Mute videos? Keep true: phones block autoplay with sound.
-const MUTED = true;
-
-// One entry per target image compiled into the .mind file, in the same order as compiled.
-// imageWidth/imageHeight: pixel size of the image you compiled (NOT the A0 print size).
-// For each video, x/y = top-left corner of the still, w/h = its size,
-// all in pixels of that same image (measure them in any image editor).
-const TARGETS = [
-  {
-    imageWidth: 1500,
-    imageHeight: 2121,          // A0 is 841 x 1189 mm, so height = width * 1.414 if portrait
-    videos: [
-      { src: "./videos/arc.mp4",     x: 120, y: 600,  w: 400, h: 400 },
-      { src: "./videos/patch.mp4",   x: 550, y: 600,  w: 400, h: 400 },
-      { src: "./videos/omega.mp4",   x: 980, y: 600,  w: 400, h: 400 },
-    ],
-  },
-];
-
-/* ===================== END OF SETTINGS ============================== */
-
-
-const startEl = document.getElementById("start");
-
-if (FALLBACK_URL) {
-  document.getElementById("fallbackLink").href = FALLBACK_URL;
-} else {
-  document.getElementById("fallback").style.display = "none";
-}
-
-document.getElementById("startBtn").addEventListener("click", startAR);
-
-function makeVideo(src) {
-  const v = document.createElement("video");
-  v.src = src;
-  v.loop = true;
-  v.muted = MUTED;
-  v.defaultMuted = MUTED;
-  v.playsInline = true;
-  v.setAttribute("playsinline", "");
-  v.setAttribute("webkit-playsinline", "");
-  v.crossOrigin = "anonymous";
-  v.preload = "auto";
-  return v;
-}
-
-function startAR() {
-  startEl.style.display = "none";
-
-  // Create the video elements inside this tap, then "unlock" them so
-  // mobile browsers allow them to be played later without another tap.
-  const assets = document.createElement("a-assets");
-  const allVideos = [];
-  let counter = 0;
-
-  TARGETS.forEach(t => {
-    t.videos.forEach(vd => {
-      vd._id = "vid" + (counter++);
-      const el = makeVideo(vd.src);
-      el.id = vd._id;
-      vd._el = el;
-      allVideos.push(el);
-      assets.appendChild(el);
-      el.play().then(() => el.pause()).catch(() => {});
-    });
-  });
-
-  const scene = document.createElement("a-scene");
-  scene.setAttribute("mindar-image",
-    `imageTargetSrc: ${TARGET_FILE}; maxTrack: ${MAX_TRACK}; uiScanning: yes; uiLoading: yes`);
-  scene.setAttribute("color-space", "sRGB");
-  scene.setAttribute("renderer", "colorManagement: true, physicallyCorrectLights");
-  scene.setAttribute("vr-mode-ui", "enabled: false");
-  scene.setAttribute("device-orientation-permission-ui", "enabled: false");
-
-  scene.appendChild(assets);
-
-  const cam = document.createElement("a-camera");
-  cam.setAttribute("position", "0 0 0");
-  cam.setAttribute("look-controls", "enabled: false");
-  scene.appendChild(cam);
-
-  TARGETS.forEach((t, index) => {
-    const target = document.createElement("a-entity");
-    target.setAttribute("mindar-image-target", `targetIndex: ${index}`);
-
-    // MindAR target space: image width = 1 unit, origin at the image centre, y up.
-    const W = t.imageWidth, H = t.imageHeight;
-
-    t.videos.forEach(vd => {
-      const cx = vd.x + vd.w / 2;
-      const cy = vd.y + vd.h / 2;
-      const posX = cx / W - 0.5;
-      const posY = (H / 2 - cy) / W;
-
-      const plane = document.createElement("a-video");
-      plane.setAttribute("src", "#" + vd._id);
-      plane.setAttribute("width", vd.w / W);
-      plane.setAttribute("height", vd.h / W);
-      plane.setAttribute("position", `${posX} ${posY} 0.001`);
-      plane.setAttribute("rotation", "0 0 0");
-      target.appendChild(plane);
-    });
-
-    // Play when the poster is recognised, pause when it is lost
-    target.addEventListener("targetFound", () => {
-      t.videos.forEach(vd => vd._el.play().catch(() => {}));
-    });
-    target.addEventListener("targetLost", () => {
-      t.videos.forEach(vd => vd._el.pause());
-    });
-
-    scene.appendChild(target);
-  });
-
-  document.body.appendChild(scene);
-}
-
-/* ============================ NOTES ===================================
- 1. Make the target file:
-      - Export your FINAL poster as an image (PNG/JPG). Downscale it to roughly
-        1000-2000 px wide: bigger does not track better, just loads slower.
-      - Compile it with the MindAR online compiler (search "MindAR image targets compiler"),
-        download the result and save it next to this file as poster.mind.
-      - Put that image's pixel width/height into TARGETS above, and measure each
-        still's x, y, w, h in the same image.
- 2. Videos: short MP4 (H.264), muted loops, one per still, saved in ./videos/.
-    Keep each file small (a few MB) so they load fast on conference Wi-Fi.
- 3. Hosting: the page must be served over HTTPS or the camera is blocked.
-    GitHub Pages or your university web space both work. Keep this HTML,
-    poster.mind and the videos folder together in the same folder.
- 4. Opening the file directly from disk will not work (camera and file loading
-    need a web server). For testing on your computer, run a local server from
-    this folder (localhost counts as secure); for testing on your phone use the
-    hosted HTTPS version.
- 5. Printing: test with a printed A4 of the final design first. Matte paper
-    tracks much better than gloss.
-======================================================================== */
-</script>
+<h2>Next example</h2>
+<p>Caption here.</p>
+<video src="videos/example2.mp4" controls playsinline preload="metadata"></video>
 </body>
 </html>
