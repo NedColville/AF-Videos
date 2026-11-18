@@ -1,44 +1,268 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Auroral form videos</title>
+
+<title>Auroral Form Identification | Supplementary Videos</title>
+
 <style>
-  body { font-family: sans-serif; max-width: 700px; margin: 0 auto; padding: 1rem; }
-  video { width: 100%; border-radius: 6px; }
-  h2 { margin-bottom: 0.2rem; }
-  p { margin-top: 0; color: #555; }
+  :root {
+    --navy: #18334f;
+    --blue: #397da5;
+    --background: #f3f6f9;
+    --panel: #ffffff;
+    --text: #263747;
+    --muted: #657586;
+    --border: #dce4eb;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--background);
+    color: var(--text);
+    margin: 0;
+    line-height: 1.65;
+  }
+
+  .header {
+    background: var(--navy);
+    color: white;
+    padding: 3rem 1.5rem;
+    text-align: center;
+  }
+
+  .header h1 {
+    font-size: 2rem;
+    margin: 0 0 0.5rem;
+    letter-spacing: -0.5px;
+  }
+
+  .header p {
+    max-width: 700px;
+    margin: 0 auto;
+    color: #d5e2ed;
+    font-size: 1rem;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 1.25rem 4rem;
+  }
+
+  .intro {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--blue);
+    border-radius: 8px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .intro h2 {
+    color: var(--navy);
+    margin: 0 0 0.5rem;
+    font-size: 1.2rem;
+  }
+
+  .intro p {
+    margin: 0;
+    color: var(--muted);
+  }
+
+  .figure-section {
+    margin-bottom: 3rem;
+  }
+
+  .figure-heading {
+    color: var(--navy);
+    font-size: 1.6rem;
+    border-bottom: 2px solid var(--border);
+    padding-bottom: 0.6rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .video-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 8px rgba(20, 45, 70, 0.04);
+  }
+
+  .video-card h3 {
+    color: var(--blue);
+    font-size: 1.1rem;
+    margin: 0 0 0.5rem;
+  }
+
+  .video-card p {
+    color: var(--muted);
+    margin: 0 0 1rem;
+    font-size: 0.95rem;
+  }
+
+  video {
+    display: block;
+    width: 100%;
+    border-radius: 6px;
+    background: #111;
+  }
+
+  .footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.85rem;
+    border-top: 1px solid var(--border);
+    padding-top: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  @media (max-width: 600px) {
+    .header {
+      padding: 2rem 1rem;
+    }
+
+    .header h1 {
+      font-size: 1.6rem;
+    }
+
+    .container {
+      padding: 1.5rem 1rem 3rem;
+    }
+
+    .video-card {
+      padding: 1rem;
+    }
+  }
 </style>
 </head>
+
 <body>
-<h1>Figure 1</h1>
 
-<h2>Figure 1a</h2>
-<p>Example of a GU during a large geomagnetic storm, characterised by its dusk sector equatorward undulations. In this video we see how the wave and its crests propagate sunward. Event identified in a 2010 Henderson paper.</p>
-<video src="Videos/GU-1.mp4" controls playsinline preload="metadata"></video>
+<header class="header">
+  <h1>Auroral Form Identification</h1>
+  <p>Supplementary videos accompanying the scientific poster</p>
+</header>
 
-<h2>Figure 1b</h2>
-<p>Example of an omega band, characterised by its poleward, dawn sector undulations. Similarly to the GU, we see sunward, but this time eastward propagation. Event identified by our model .</p>
-<video src="Videos/OB-1.mp4" controls playsinline preload="metadata"></video>
+<main class="container">
 
-<h1>Figure 6</h1>
+  <section class="intro">
+    <h2>About these videos</h2>
+    <p>
+      This page provides supplementary video examples of auroral forms
+      identified in IMAGE Far Ultraviolet (FUV) imagery. The videos
+      illustrate the morphology and temporal evolution of giant
+      undulations (GUs) and omega bands, including examples recovered
+      by our machine-learning model. They accompany Figures 1 and 6
+      of the poster and provide additional context for the events
+      discussed therein.
+    </p>
+  </section>
 
-<h2>Figure 6a</h2>
-<p>An omega band event identified by our model. We see a a large train of omega bands spanning over 6 MLT.</p>
-<video src="Videos/OB-2.mp4" controls playsinline preload="metadata"></video>
 
-<h2>Figure 6b</h2>
-<p>Omega band event identified by our model. This event morphologically is interesting, with tall, thin torch/streamer like structures and fast sunward flows after the event.</p>
-<video src="Videos/OB-3.mp4" controls playsinline preload="metadata"></video>
+  <!-- FIGURE 1 -->
 
-<h2>Figure 6c</h2>
-<p>This GU event, initially published in a 2007 paper, despite being unseen, was recovered by our model. Morphologically, this event certainly has smaller amplitudes than figure 1a, but still is recovered, showing the strong generalisation of the model. Again, we see sunward propagation.</p>
-<video src="Videos/GU-2.mp4" controls playsinline preload="metadata"></video>
+  <section class="figure-section">
 
-<h2>Figure 6d</h2>
-<p>A rare dawnside, possibly GU event recovered by our model. Although more difficult to see than other examples, this event poses interesting questions as to the drivers of auroral forms given the MLT at which it occurs.</p>
-<video src="Videos/GU-3.mp4" controls playsinline preload="metadata"></video>
+    <h2 class="figure-heading">Figure 1 – Auroral form examples</h2>
+
+    <article class="video-card">
+      <h3>Figure 1a – Giant undulation</h3>
+      <p>
+        Example of a GU observed during a large geomagnetic storm,
+        characterised by equatorward-pointing undulations in the
+        dusk sector. The video illustrates the sunward propagation
+        of the wave structure and its crests. This event was previously
+        identified in a 2010 study by Henderson et al.
+      </p>
+      <video src="Videos/GU-1.mp4" controls playsinline preload="metadata"></video>
+    </article>
+
+    <article class="video-card">
+      <h3>Figure 1b – Omega band</h3>
+      <p>
+        Example of an omega band, characterised by poleward-protruding
+        structures in the dawn sector. As with the GU, the structure
+        exhibits sunward propagation, corresponding to eastward
+        motion in this sector. This event was identified by our model.
+      </p>
+      <video src="Videos/OB-1.mp4" controls playsinline preload="metadata"></video>
+    </article>
+
+  </section>
+
+
+  <!-- FIGURE 6 -->
+
+  <section class="figure-section">
+
+    <h2 class="figure-heading">Figure 6 – Additional model detections</h2>
+
+    <article class="video-card">
+      <h3>Figure 6a – Extended omega band train</h3>
+      <p>
+        An omega band event identified by our model. The event
+        comprises an extended train of omega bands spanning more
+        than 6 hours of magnetic local time (MLT).
+      </p>
+      <video src="Videos/OB-2.mp4" controls playsinline preload="metadata"></video>
+    </article>
+
+    <article class="video-card">
+      <h3>Figure 6b – Structured omega band event</h3>
+      <p>
+        An omega band event identified by our model. This event
+        exhibits interesting morphology, with tall, narrow,
+        torch- or streamer-like structures, followed by rapid
+        sunward flows.
+      </p>
+      <video src="Videos/OB-3.mp4" controls playsinline preload="metadata"></video>
+    </article>
+
+    <article class="video-card">
+      <h3>Figure 6c – Previously reported giant undulation</h3>
+      <p>
+        A GU event previously reported in a 2007 study, which was
+        recovered by our model despite not being included in the
+        training data. Although its amplitude is smaller than that
+        of the event shown in Figure 1a, its recovery provides an
+        example of the model's ability to identify morphological
+        features beyond those represented in its training examples.
+        Sunward propagation is again apparent.
+      </p>
+      <video src="Videos/GU-2.mp4" controls playsinline preload="metadata"></video>
+    </article>
+
+    <article class="video-card">
+      <h3>Figure 6d – Dawnside candidate event</h3>
+      <p>
+        A rare dawnside event, potentially exhibiting GU-like
+        morphology, recovered by our model. Although the structure
+        is less clearly defined than in the other examples, its
+        occurrence at this MLT raises interesting questions
+        concerning the possible drivers and spatial distribution
+        of auroral forms.
+      </p>
+      <video src="Videos/GU-3.mp4" controls playsinline preload="metadata"></video>
+    </article>
+
+  </section>
+
+
+  <footer class="footer">
+    Supplementary material accompanying the scientific poster.
+  </footer>
+
+</main>
+
 </body>
 </html>
-
+```
